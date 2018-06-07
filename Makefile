@@ -41,7 +41,8 @@ define menu_ui
   |   New Template  >>  make new       |
   |   Compile       >>  make compile   |
   |   Build         >>  make build     |
-  |   Compile&build >>  make b         |
+  |   Compile&Build >>  make b         |
+  |   Build&Run     >>  make a         |
   |   Clean         >>  make clean     |
   |   Run           >>  make run       |
   |   Contact       >>  make contact   |
@@ -71,32 +72,32 @@ define new_ui
 endef
 define b_ui
                  _______________________
-               _|Compile + Build Success|____
-              |   ____                       |
-    (\__/)    |  |  |_|    ___|\    100100   |
-    (='.')    |  |</> |   |___  )   011010   |
-    (_(")(")  |  |____|       |/    101101   |
-              |______________________________|
+               _|Compile + Build Success|_____
+              |   _____                       |
+    (\__/)    |  |     |    ___|\    1001001  |
+    (='.')    |  <Code/>   |___  )   0110101  |
+    (_(")(")  |  |_____|       |/    1011010  |
+              |_______________________________|
 
 endef
 define compile_ui
                  _______________
-               _|Compile Success|____________
-              |   ____               _____   |
-    (\ (\     |  |  |_|    ___|\    / OBJ \  |
-    ( -.-)    |  |</> |   |___  )   |[] []|  |
-    O_(")(")  |  |____|       |/     \___/   |
-              |______________________________|
+               _|Compile Success|_____________
+              |   _____               _____   |
+    (\ (\     |  |     |    ___|\    / OBJ \  |
+    ( -.-)    |  <Code/>   |___  )   |[] []|  |
+    O_(")(")  |  |_____|       |/     \___/   |
+              |_______________________________|
 
 endef
 define build_ui
                  _____________
-               _|Build Success|______________
-              |   _____                      |
-    /^\_/^\   |  / OBJ \   ___|\    100100   |
-    (>'.'<)   |  |[] []|  |___  )   011010   |
-     (""")    |   \___/       |/    101101   |
-              |______________________________|
+               _|Build Success|_______________
+              |   _____                       |
+    /^\_/^\   |  / OBJ \    ___|\    1001001  |
+    (>'.'<)   |  |[] []|   |___  )   0110101  |
+     (""")    |   \___/        |/    1011010  |
+              |_______________________________|
 
 endef
 define clean_ui
@@ -120,7 +121,7 @@ endef
 define run_uii
      _ _  __    _  _ _  _ 
     - /)/)- __- --_-  -_ --
-     (>.<) --_  _- --_-_  ---
+   - (>.<) --_  _- --_-_  ---
     -_\__\-   _--_ ---_- --
 
 endef
@@ -157,11 +158,10 @@ define run_ui_err
 endef
 define new_ui_err
 
-     (\_/)                          o_o_
-    =(^.^)=   Your projects already  ( u ) 
-      ) (
+     (\_/)                             /)_/) 
+    =(^.^)=   Your projects already  (o.o)
+      ) (                              ) (
      
-
 endef
 
 
@@ -215,10 +215,13 @@ b_process: $(OBJ_FILES)
 	@$(CC) -o $(OUT_DIR)/$(NAME) $^ $(LIBDIR) $(LINKER_FLAGS)
 
 
+a: b run
+
+
 run: run_process
 	$(info )
 run_process:
-ifneq ("$(wildcard $(OUT_DIR)/$(NAME))",-f)
+ifeq ($(basename $(OUT_DIR)/$(NAME)),$(OUT_DIR)/$(NAME))
 	$(info $(run_ui))
 	$(info $()   - (>.<) [Run] ./$(OUT_DIR)/$(NAME))
 	$(info $()    -_\__\-   _--_ ---_- --)
